@@ -16,8 +16,38 @@ import { CustomIcon } from "./icons/CustomIcons";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { HeartButton } from "./HeartButton";
+import { useEffect, useState } from "react";
 
-export const CombosList = () => {
+type Combo = {
+  id: number;
+  username: string;
+  description: string;
+  inputs: string;
+  likes: number;
+};
+
+type CombosListProps = {
+  characterID: number;
+};
+
+
+export const CombosList = ({ characterID }: CombosListProps) => {
+  const [combos, setCombos] = useState<Combo[]>([]);
+  useEffect(() => {
+    const fetchCombos = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3010/api/combos/character/${characterID}`
+        );
+        const data = await response.json();
+        setCombos(data);
+      } catch (error) {
+        console.error("Error fetching combos:", error);
+      }
+    };
+
+    fetchCombos();
+  }, [characterID]);
   return (
     <Section className="m-0 grid grid-rows-[50px_1fr] pr-0 gap-4">
       <div className="flex items-center justify-around">
@@ -122,7 +152,7 @@ export const CombosList = () => {
           <Avatar />
           <CardTitle>Create projects</CardTitle>
           <CardDescription className="relative">
-            <HeartButton />
+            
           </CardDescription>
         </CardHeader>
         <CardContent></CardContent>

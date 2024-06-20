@@ -11,9 +11,12 @@ export const Header = () => {
   return (
     <header className="sticky top-0 py-4 backdrop-blur-sm backdrop-grayscale z-30">
       <Section className="flex items-center">
+        <Link href={"/"}>
+        
         <h1 className="text-md font-bold items-center gap-1 flex">
           Combosss<span><CustomIcon size={20} fill="yellow" stroke="none" name="flameLogo" className="-rotate-90"/></span>
           </h1>
+        </Link>
         <div className="flex-1 text-center">
           <AddCombo/>
         {/* <Link
