@@ -1,20 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-// import { Textarea } from "@/components/ui/textarea";
-
-// export function ComboArea() {
-//   return (
-//     <div className="grid w-full gap-1.5">
-//       <Textarea placeholder="" />
-//       <p className="text-sm text-muted-foreground">
-//         Type: LP (light punch), MP (medium punch), HP (heavy punch), LK (light kick), MK (medium kick), HK (heavy kick), N (neutral), EX(P) (Ex punch), l | lb | b | rb | r | t (all directions, left | left bottom | etc...), 360 (360 direction), Jf (jump front or b for back), Hb (hold bottom direction), S1 (super art 1, 2 or 3), DR (drive rush), + (next move)
-//       </p>
-//     </div>
-//   );
-// }
 import { TextAlignLeftIcon } from "@radix-ui/react-icons";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-// import Image from "next/image";
 
 type ComboAreaProps = {
   onInputAdd: (inputName: string, inputSrc: string) => void;
@@ -38,7 +25,21 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-d.png"
-          alt="kicks"
+          alt="directions"
+        />
+      </ToggleGroupItem>
+      <ToggleGroupItem
+        className="overflow-hidden p-2"
+        value="key-u"
+        aria-label="Toggle key-u"
+        onClick={() =>
+          handleAddInput("d", "/assets/form/inputs/directions/key-u.png")
+        }
+      >
+        <img
+          className="w-6"
+          src="/assets/form/inputs/directions/key-u.png"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -52,7 +53,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-dc.png"
-          alt="kicks"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -66,7 +67,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-dl.png"
-          alt="kicks"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -80,7 +81,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-dr.png"
-          alt="kicks"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -94,7 +95,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-l.png"
-          alt="kicks"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -108,7 +109,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-lc.png"
-          alt="kicks"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -122,7 +123,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-r.png"
-          alt="kicks"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -139,7 +140,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/directions/key-circle.png"
-          alt="kicks"
+          alt="directions"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -277,7 +278,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/specials/key-nutral.png"
-          alt="kicks"
+          alt="specials"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -291,7 +292,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-6"
           src="/assets/form/inputs/specials/key-plus.png"
-          alt="kicks"
+          alt="specials"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -305,7 +306,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-10"
           src="/assets/form/inputs/specials/s1.png"
-          alt="kicks"
+          alt="specials"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -319,7 +320,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-10"
           src="/assets/form/inputs/specials/s2.png"
-          alt="kicks"
+          alt="specials"
         />
       </ToggleGroupItem>
       <ToggleGroupItem
@@ -333,7 +334,7 @@ export function ComboArea({ onInputAdd, onNewLineAdd }: ComboAreaProps) {
         <img
           className="w-10"
           src="/assets/form/inputs/specials/s3.png"
-          alt="kicks"
+          alt="specials"
         />
       </ToggleGroupItem>
       <ToggleGroupItem className="overflow-hidden p-2" value="return" aria-label="return line" onClick={onNewLineAdd}>

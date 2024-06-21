@@ -4,10 +4,6 @@ import * as React from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
-const tags = Array.from({ length: 10 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-)
-
 type Input = {
   inputName: string;
   inputSrc: string;

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select"
 
 type Character = {
-  id: number;
+  characterID: number;
   name: string;
   avatar: string;
 };
@@ -24,13 +24,15 @@ type CharactersSelectProps = {
 
 
 export function CharactersSelect({ characters, onChange }: CharactersSelectProps) {
-  const [selectedCharacter, setSelectedCharacter] = React.useState<number | null>(null);
 
-  const handleSelectChange = (value: string) => {
-    const characterID = Number(value);
-    setSelectedCharacter(characterID);
-    onChange(characterID);
+  const handleSelectChange = (characterName: string) => {
+    const selectedChar = characters.find((char) => char.name === characterName);
+
+    if (selectedChar) {
+      onChange(selectedChar?.characterID);
+    }
   };
+
   return (
     <Select onValueChange={handleSelectChange}>
       <SelectTrigger className="w-full">
@@ -42,9 +44,8 @@ export function CharactersSelect({ characters, onChange }: CharactersSelectProps
           {characters.map((character) => (
             <SelectItem
               className="flex"
-              key={character.id}
-              value={character.id ? character.id.toString() : character.name}
-              // selected={selectedCharacter === character.id}
+              key={character.characterID}
+              value={character.name}
             >
               <div className="flex items-center gap-2">
                 <img className="w-[25px] flex inline-flex rounded-full" src={character.avatar} alt={character.name} />
