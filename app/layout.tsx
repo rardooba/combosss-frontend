@@ -10,7 +10,7 @@ const poppins = Poppins({ subsets: ["latin"], weight: "400", variable: "--font-c
 
 export const metadata: Metadata = {
   title: "🔥 Combosss by maïssoum",
-  description: "Begin front-end",
+  description: "Join the best app of sharing combo.",
 };
 
 export default function RootLayout({

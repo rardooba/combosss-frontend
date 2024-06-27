@@ -24,32 +24,30 @@ import { Input } from "@/components/ui/input";
 type Combo = {
   characterID: number;
   comboName: string;
-  position: string[];
+  positions: { positionName: string }[];
 };
 
 type InputData = {
   inputName: string;
   inputSrc: string;
-  inputOrder: number;
 };
 
 type Input = {
   inputName: string;
   inputSrc: string;
-  inputOrder: number;
 };
 
 type Character = {
   characterID: number;
   name: string;
-  avatar: string;
+  thumbnail: string;
 };
 
 export function AddCombo() {
   const router = useRouter();
   const [combo, setCombo] = useState<Combo>({
     characterID: 0,
-    position: [],
+    positions: [],
     comboName: "",
   });
   const [lines, setLines] = useState<Input[][]>([[]]);
@@ -66,29 +64,10 @@ export function AddCombo() {
     fetchCharacters();
   }, []);
 
-  // const addInputToLine = (inputName: string, inputSrc: string) => {
-  //   const currentLineIndex = lines.length - 1;
-  //   const inputOrder = lines[currentLineIndex].length + 1;
-  //   const newInput: Input = { inputName, inputSrc, inputOrder };
-
-  //   const updatedLines = [...lines];
-  //   //TODO limiter le nombre d'input sur une ligne
-  //   updatedLines[currentLineIndex].push(newInput);
-  //   setLines(updatedLines);
-  // };
-
-  // const addNewLine = () => {
-  //   // console.log(lines) //? Je bloque à 10 lignes max
-  //   if (lines.length < 10) {
-  //     setLines([...lines, []]);
-  //   }
-  // };
-
   const addInputToLine = (inputName: string, inputSrc: string) => {
     const currentLineIndex = lines.length - 1;
     const currentLineLength = lines[currentLineIndex].length;
-    const inputOrder = currentLineLength === 0 ? 1 : lines[currentLineIndex][currentLineLength - 1].inputOrder + 1;
-    const newInput: InputData = { inputName, inputSrc, inputOrder };
+    const newInput: InputData = { inputName, inputSrc};
 
     const updatedLines = [...lines];
     updatedLines[currentLineIndex].push(newInput);
@@ -106,68 +85,31 @@ export function AddCombo() {
   };
 
   const handlePositionChange = (position: string) => {
-    if (combo.position.includes(position)) {
+    const positionObject = { positionName: position };
+    if (combo.positions.some((pos) => pos.positionName === position)) {
       setCombo({
         ...combo,
-        position: combo.position.filter((pos) => pos !== position),
+        positions: combo.positions.filter((pos) => pos.positionName !== position),
       });
     } else {
-      setCombo({ ...combo, position: [...combo.position, position] });
+      setCombo({ ...combo, positions: [...combo.positions, positionObject] });
     }
   };
+
 
   const handleComboNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCombo({ ...combo, comboName: event.target.value });
   };
 
-  // const handleSubmitCombo = async () => {
-  //   try {
-  //     const flatInputs = lines.flat().map((input, index) => ({
-  //       inputName: input.inputName,
-  //       inputSrc: input.inputSrc,
-  //       inputOrder: index + 1,
-  //     }));
-
-  //     const comboData = {
-  //       combo: {
-  //         ...combo,
-  //         likes: 0,
-  //       },
-  //       inputs: flatInputs,
-  //     };
-
-  //     const response = await fetchAPI("/api/combos", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(comboData),
-  //     });
-
-  //     alert("Combo added successfully!");
-  //     setCombo({ characterID: 0, position: [], comboName: "" });
-  //     setLines([[]]);
-  //   } catch (error) {
-  //     console.error("Error adding combo:", error);
-  //   }
-  // };
-
   const handleSubmitCombo = async () => {
     try {
-      const flatInputs = lines.flatMap((line, lineIndex) =>
-        line.map((input, index) => ({
-          inputName: input.inputName,
-          inputSrc: input.inputSrc,
-          inputOrder: index + 1,
-        }))
-      );
-
       const comboData = {
         combo: {
-          ...combo,
-          likes: 0,
+          characterID: combo.characterID,
+          comboName: combo.comboName,
         },
-        inputs: flatInputs,
+        positions: combo.positions,
+        inputs: lines,
       };
 
       const response = await fetchAPI("/api/combos", {
@@ -176,11 +118,11 @@ export function AddCombo() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(comboData),
-        credentials: "include", //? (cookies) in the request
+        credentials: "include",
       });
 
       alert("Combo added successfully!");
-      setCombo({ characterID: 0, comboName: "", position: [] });
+      setCombo({ characterID: 0, comboName: "", positions: [] });
       setLines([[]]);
       router.push('/');
     } catch (error) {
@@ -189,7 +131,7 @@ export function AddCombo() {
   };
 
   const resetPreview = () => {
-    setCombo({ characterID: 0, position: [], comboName: combo.comboName });
+    setCombo({ characterID: 0, positions: [], comboName: combo.comboName });
     setLines([[]]);
   };
 
@@ -239,7 +181,7 @@ export function AddCombo() {
               Select position:
             </Label>
             <PositionsCheck
-              selectedPositions={combo.position}
+              selectedPositions={combo.positions}
               onChange={handlePositionChange}
             />
           </div>

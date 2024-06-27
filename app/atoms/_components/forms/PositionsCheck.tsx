@@ -3,7 +3,7 @@ import React, { ChangeEvent } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 type PositionsCheckProps = {
-  selectedPositions: string[];
+  selectedPositions: { positionName: string }[];
   onChange: (position: string) => void;
 };
 
@@ -12,20 +12,22 @@ export function PositionsCheck({
   onChange,
 }: PositionsCheckProps) {
   const handlePositionChange = (position: string, checked: string | boolean) => {
-    if (checked) {
-      onChange(position);
-    } else {
-      onChange(position); // Optional: Handle unchecking logic if needed
-    }
-  };
+  if (checked) {
+    console.log(position)
+    onChange(position);
+  } else {
+    onChange(position);
+  }
+};
+
   return (
     <div className="w-full flex flex-col gap-3 md:flex-row md:gap-3 md:justify-between">
       <div className="flex items-center gap-2">
         <Checkbox
           id="midscreen"
           value="midscreen"
-          checked={selectedPositions.includes('midscreen')}
-          onCheckedChange={(checked) => handlePositionChange('midscreen', checked)}
+          checked={selectedPositions.some((pos) => pos.positionName === "midscreen")}
+          onCheckedChange={(checked) => handlePositionChange("midscreen", checked as boolean)}
         />
         <label
           htmlFor="midscreen"
@@ -38,8 +40,8 @@ export function PositionsCheck({
         <Checkbox
           id="corner"
           value="corner"
-          checked={selectedPositions.includes('corner')}
-          onCheckedChange={(checked) => handlePositionChange('corner', checked)}
+          checked={selectedPositions.some((pos) => pos.positionName === "corner")}
+          onCheckedChange={(checked) => handlePositionChange("corner", checked as boolean)}
         />
         <label
           htmlFor="corner"
@@ -52,8 +54,8 @@ export function PositionsCheck({
         <Checkbox
           id="jump"
           value="jump"
-          checked={selectedPositions.includes('jump')}
-          onCheckedChange={(checked) => handlePositionChange('jump', checked)}
+          checked={selectedPositions.some((pos) => pos.positionName === "jump")}
+          onCheckedChange={(checked) => handlePositionChange("jump", checked as boolean)}
         />
         <label
           htmlFor="jump"
@@ -64,13 +66,13 @@ export function PositionsCheck({
       </div>
       <div className="flex items-center gap-2">
         <Checkbox
-          id="antiair"
-          value="antiair"
-          checked={selectedPositions.includes('antiair')}
-          onCheckedChange={(checked) => handlePositionChange('antiair', checked)}
+          id="anti-air"
+          value="anti-air"
+          checked={selectedPositions.some((pos) => pos.positionName === "anti-air")}
+          onCheckedChange={(checked) => handlePositionChange("anti-air", checked as boolean)}
         />
         <label
-          htmlFor="antiair"
+          htmlFor="anti-air"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 inline-flex"
         >
           Anti-air

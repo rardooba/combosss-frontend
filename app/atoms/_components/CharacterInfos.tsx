@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { Section } from "./Section";
 
 type Character = {
-  id: number;
+  characterID: number;
   name: string;
   avatar: string;
   story: string;

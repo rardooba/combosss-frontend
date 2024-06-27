@@ -2,12 +2,10 @@ import { Separator } from "@/components/ui/separator";
 import { CharacterInfos } from "@/app/atoms/_components/CharacterInfos";
 import { CombosList } from "@/app/atoms/_components/CombosList";
 import { Section } from "@/app/atoms/_components/Section";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { GetServerSideProps } from "next";
+import { fetchAPI } from "@/lib/utils";
 
 type Character = {
-  id: number;
+  characterID: number;
   name: string;
   avatar: string;
   story: string;
@@ -21,22 +19,17 @@ type Character = {
   numberOfLovers: number;
 };
 
-const fetchCharacter = async (id: number): Promise<Character> => {
-  const response = await fetch(`http://localhost:3010/api/characters/${id}`, {
-    cache: "no-store",
-  });
-  if (!response.ok) {
-    const errorDetail = await response.text();
-    console.error("Failed to fetch character:", response.status, errorDetail);
-    throw new Error("Failed to fetch character");
-  }
-  const character = await response.json();
-  return character;
-};
-
 const Character = async ({ params }: { params: { id: string } }) => {
+  const fetchCharacter = async (id: number): Promise<Character> => {
+    return await fetchAPI(`/api/characters/${id}`, {
+      method: "GET",
+      cache: "no-store",
+    });
+  };
+
   try {
     const character = await fetchCharacter(Number(params.id));
+    console.log(character);
 
     return (
       <main>
@@ -47,7 +40,7 @@ const Character = async ({ params }: { params: { id: string } }) => {
 
           <Separator orientation="vertical" />
 
-          <CombosList characterID={character.id} />
+          <CombosList characterID={character.characterID} />
         </Section>
       </main>
     );

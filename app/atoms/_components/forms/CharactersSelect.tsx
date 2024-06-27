@@ -10,11 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import Image from "next/image";
 
 type Character = {
   characterID: number;
   name: string;
-  avatar: string;
+  thumbnail: string;
 };
 
 type CharactersSelectProps = {
@@ -48,7 +49,10 @@ export function CharactersSelect({ characters, onChange }: CharactersSelectProps
               value={character.name}
             >
               <div className="flex items-center gap-2">
-                <img className="w-[25px] flex inline-flex rounded-full" src={character.avatar} alt={character.name} />
+             
+
+                <img className="flex inline-flex rounded-full w-6 h-6" src={character.thumbnail} alt={character.name} />
+    
                 <span className="flex inline-flex">{character.name}</span>
               </div>
             </SelectItem>

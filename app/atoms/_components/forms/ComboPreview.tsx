@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator"
 type Input = {
   inputName: string;
   inputSrc: string;
-  inputOrder: number;
 };
 
 type ComboPreviewProps = {
