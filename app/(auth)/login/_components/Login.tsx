@@ -1,4 +1,6 @@
 'use client'
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,6 +23,9 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { fetchAPI } from "@/lib/utils";
+
+
 
 const LoginSchema = z.object({
   email: z
@@ -37,6 +42,8 @@ const LoginSchema = z.object({
 type LoginValues = z.infer<typeof LoginSchema>;
 
 const Login = () => {
+  const router = useRouter();
+
   const form = useForm<LoginValues>({
     resolver: zodResolver(LoginSchema),
     mode: "onSubmit",
@@ -46,9 +53,26 @@ const Login = () => {
     },
   });
 
-  const handleSubmitLogin = (values: LoginValues) => {
-    console.log("Should sign in with values:", values);
+  const handleSubmitLogin = async (values: LoginValues) => {
+    try {
+      const response = await fetchAPI('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      });
+
+      router.push('/');
+
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
   };
+
 
   return (
     <Form {...form}>
@@ -91,7 +115,7 @@ const Login = () => {
             />
           </CardContent>
           <CardFooter>
-            <Button>Login</Button>
+            <Button type="submit">Login</Button>
           </CardFooter>
         </Card>
       </form>
