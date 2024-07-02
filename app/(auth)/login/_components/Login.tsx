@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { fetchAPI } from "@/lib/utils";
 
+import { useAuth } from "@/context/AuthContext";
 
 
 const LoginSchema = z.object({
@@ -42,6 +43,7 @@ const LoginSchema = z.object({
 type LoginValues = z.infer<typeof LoginSchema>;
 
 const Login = () => {
+  const { setIsAuthenticated, checkAuthStatus } = useAuth();
   const router = useRouter();
 
   const form = useForm<LoginValues>({
@@ -66,6 +68,21 @@ const Login = () => {
         }),
       });
 
+      // const checkAuthStatus = async () => {
+      //   try {
+      //     const response = await fetchAPI("/api/auth/status", {
+      //       method: "GET",
+      //     });
+      //     console.log(response.isAuthenticated);
+      //     setIsAuthenticated(response.isAuthenticated);
+      //   } catch (error) {
+      //     console.error("Failed to check authentication status:", error);
+      //   }
+      // };
+
+      // await checkAuthStatus();
+      await checkAuthStatus();
+      setIsAuthenticated(true);
       router.push('/');
 
     } catch (error) {

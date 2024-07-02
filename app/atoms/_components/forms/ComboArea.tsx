@@ -154,7 +154,7 @@ const INPUTS_KEYS: InputsKeysProps[] = [
     url: "https://www.streetfighter.com/6/assets/images/common/controller/icon_punch.png",
   },
   {
-    value: "nutral",
+    value: "N",
     alt: "specials",
     src: "/assets/form/inputs/specials/key-nutral.png",
     url: "https://www.streetfighter.com/6/assets/images/common/controller/key-nutral.png",

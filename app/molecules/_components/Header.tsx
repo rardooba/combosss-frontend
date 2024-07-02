@@ -4,31 +4,38 @@ import { useRouter } from "next/navigation";
 import { Section } from "@/app/atoms/_components/Section";
 import { CustomIcon } from "@/app/atoms/_components/icons/CustomIcons";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, fetchAPI } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link";
 import { AddCombo } from "@/app/atoms/_components/AddCombo";
-import { fetchAPI } from "@/lib/utils";
+
+
+import { useAuth } from "@/context/AuthContext";
 
 export const Header = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, setIsAuthenticated, checkAuthStatus } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await fetchAPI("/api/auth/status", {
-          method: "GET",
-        });
-        console.log(response.isAuthenticated)
-        setIsAuthenticated(response.isAuthenticated);
-      } catch (error) {
-        console.error("Failed to check authentication status:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const checkAuthStatus = async () => {
+  //     try {
+  //       const response = await fetchAPI("/api/auth/status", {
+  //         method: "GET",
+  //       });
+  //       console.log(response.isAuthenticated)
+  //       setIsAuthenticated(response.isAuthenticated);
+  //     } catch (error) {
+  //       console.error("Failed to check authentication status:", error);
+  //     }
+  //   };
 
-    checkAuthStatus();
-  }, []);
+  //   //? token csrf 
+
+  //   checkAuthStatus();
+  //   const intervalId = setInterval(checkAuthStatus, 2 * 60 * 1000); // Check every 2 minutes
+
+  //   return () => clearInterval(intervalId); // Clean up the interval on component unmount
+  // }, []);
 
   const handleLogout = async () => {
     try {
@@ -55,8 +62,8 @@ export const Header = () => {
           </h1>
         </Link>
         <div className="flex-1 text-center">
-        {/* {isAuthenticated && <AddCombo />} */}
-        <AddCombo />
+        {isAuthenticated && <AddCombo />}
+        {/* <AddCombo /> */}
         </div>
         <nav className="flex items-center gap-2">
         {!isAuthenticated ? (

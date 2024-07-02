@@ -198,7 +198,7 @@ const Signin = () => {
             </div>
             <Button className="py-5 w-full gap-2" variant={"outline"} onClick={handleRedirect}>
               <CustomIcon name="gmail" size={20} /> Signin with your Google
-              adress
+              address
             </Button>
 
             <p className="px-8 text-center text-sm text-muted-foreground">
